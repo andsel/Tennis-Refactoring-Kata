@@ -18,12 +18,16 @@ public class TennisGame2 implements TennisGame
         String score = "";
         if (P1point == P2point)
         {
-            if (P1point>=3)
+            if (P1point >= 3)
                 score = "Deuce";
             else
                 score = scoreToLabel(P1point) + "-All";
         } else {
-            if (P1point >= 4 || P2point >= 4) {
+            if (P1point < 4 && P2point < 4) {
+                P1res = scoreToLabel(P1point);
+                P2res = scoreToLabel(P2point);
+                score = P1res + "-" + P2res;
+            } else {
                 int distance = P1point - P2point;
                 String forwardPlayer = distance > 0 ? player1Name : player2Name;
                 if (Math.abs(distance) == 1) {
@@ -31,10 +35,6 @@ public class TennisGame2 implements TennisGame
                 } else if (Math.abs(distance) >= 2) {
                     score = "Win for " + forwardPlayer;
                 }
-            } else {
-                P1res = scoreToLabel(P1point);
-                P2res = scoreToLabel(P2point);
-                score = P1res + "-" + P2res;
             }
         }
 

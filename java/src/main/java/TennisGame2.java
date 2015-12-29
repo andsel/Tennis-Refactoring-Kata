@@ -22,30 +22,27 @@ public class TennisGame2 implements TennisGame
                 score = "Deuce";
             else
                 score = scoreToLabel(P1point) + "-All";
-        }
-
-        if (P1point>P2point)
-        {
-            if (P1point < 4) {
-                P1res = scoreToLabel(P1point);
-                P2res = scoreToLabel(P2point);
-                score = P1res + "-" + P2res;
-            } else if (P1point-P2point >= 2) {
-                score = "Win for " + player1Name;
-            } else if (P2point >= 3) {
-                score = "Advantage " + player1Name;
-            }
-        }
-        if (P2point>P1point)
-        {
-            if (P2point < 4) {
-                P1res = scoreToLabel(P1point);
-                P2res = scoreToLabel(P2point);
-                score = P1res + "-" + P2res;
-            } else if ((P2point-P1point)>=2) {
-                score = "Win for " + player2Name;
-            } else if (P1point >= 3) {
-                score = "Advantage " + player2Name;
+        } else {
+            if (P1point > P2point) {
+                if (P1point < 4) {
+                    P1res = scoreToLabel(P1point);
+                    P2res = scoreToLabel(P2point);
+                    score = P1res + "-" + P2res;
+                } else if (P1point - P2point >= 2) {
+                    score = "Win for " + player1Name;
+                } else if (P2point >= 3) {
+                    score = "Advantage " + player1Name;
+                }
+            } else {
+                if (P2point < 4) {
+                    P1res = scoreToLabel(P1point);
+                    P2res = scoreToLabel(P2point);
+                    score = P1res + "-" + P2res;
+                } else if ((P2point - P1point) >= 2) {
+                    score = "Win for " + player2Name;
+                } else if (P1point >= 3) {
+                    score = "Advantage " + player2Name;
+                }
             }
         }
 

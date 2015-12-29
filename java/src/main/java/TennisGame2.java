@@ -23,26 +23,18 @@ public class TennisGame2 implements TennisGame
             else
                 score = scoreToLabel(P1point) + "-All";
         } else {
-            if (P1point > P2point) {
-                if (P1point < 4) {
-                    P1res = scoreToLabel(P1point);
-                    P2res = scoreToLabel(P2point);
-                    score = P1res + "-" + P2res;
-                } else if (P1point - P2point >= 2) {
-                    score = "Win for " + player1Name;
-                } else if (P2point >= 3) {
-                    score = "Advantage " + player1Name;
+            if (P1point >= 4 || P2point >= 4) {
+                int distance = P1point - P2point;
+                String forwardPlayer = distance > 0 ? player1Name : player2Name;
+                if (Math.abs(distance) == 1) {
+                    score = "Advantage " + forwardPlayer;
+                } else if (Math.abs(distance) >= 2) {
+                    score = "Win for " + forwardPlayer;
                 }
             } else {
-                if (P2point < 4) {
-                    P1res = scoreToLabel(P1point);
-                    P2res = scoreToLabel(P2point);
-                    score = P1res + "-" + P2res;
-                } else if ((P2point - P1point) >= 2) {
-                    score = "Win for " + player2Name;
-                } else if (P1point >= 3) {
-                    score = "Advantage " + player2Name;
-                }
+                P1res = scoreToLabel(P1point);
+                P2res = scoreToLabel(P2point);
+                score = P1res + "-" + P2res;
             }
         }
 

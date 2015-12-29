@@ -25,11 +25,11 @@ public class TennisGame2 implements TennisGame
                 score = P1res + "-" + P2res;
             } else {
                 int distance = P1point - P2point;
-                String forwardPlayer = distance > 0 ? player1Name : player2Name;
+                String higherScorePlayer = distance > 0 ? player1Name : player2Name;
                 if (Math.abs(distance) == 1) {
-                    score = "Advantage " + forwardPlayer;
+                    score = "Advantage " + higherScorePlayer;
                 } else if (Math.abs(distance) >= 2) {
-                    score = "Win for " + forwardPlayer;
+                    score = "Win for " + higherScorePlayer;
                 }
             }
         }

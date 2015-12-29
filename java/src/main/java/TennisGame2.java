@@ -16,16 +16,12 @@ public class TennisGame2 implements TennisGame
 
     public String getScore(){
         String score = "";
-        if (P1point == P2point)
-        {
-            if (P1point >= 3)
-                score = "Deuce";
-            else
-                score = scoreToLabel(P1point) + "-All";
+        if (P1point == P2point && P1point >= 3) {
+            score = "Deuce";
         } else {
             if (P1point < 4 && P2point < 4) {
                 P1res = scoreToLabel(P1point);
-                P2res = scoreToLabel(P2point);
+                P2res = P1point == P2point ? "All" : scoreToLabel(P2point);
                 score = P1res + "-" + P2res;
             } else {
                 int distance = P1point - P2point;

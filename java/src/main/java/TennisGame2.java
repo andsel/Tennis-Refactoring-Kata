@@ -15,26 +15,20 @@ public class TennisGame2 implements TennisGame
     }
 
     public String getScore(){
-        String score = "";
         if (P1point == P2point && P1point >= 3) {
-            score = "Deuce";
-        } else {
-            if (P1point < 4 && P2point < 4) {
-                P1res = scoreToLabel(P1point);
-                P2res = P1point == P2point ? "All" : scoreToLabel(P2point);
-                score = P1res + "-" + P2res;
-            } else {
-                int distance = P1point - P2point;
-                String higherScorePlayer = distance > 0 ? player1Name : player2Name;
-                if (Math.abs(distance) == 1) {
-                    score = "Advantage " + higherScorePlayer;
-                } else if (Math.abs(distance) >= 2) {
-                    score = "Win for " + higherScorePlayer;
-                }
-            }
+            return "Deuce";
         }
 
-        return score;
+        if (P1point < 4 && P2point < 4) {
+            P1res = scoreToLabel(P1point);
+            P2res = P1point == P2point ? "All" : scoreToLabel(P2point);
+            return P1res + "-" + P2res;
+        }
+
+        int distance = P1point - P2point;
+        String higherScorePlayer = distance > 0 ? player1Name : player2Name;
+        final String scoreType = Math.abs(distance) == 1 ? "Advantage " : "Win for ";
+        return scoreType + higherScorePlayer;
     }
     
     //NB removed unused code

@@ -20,26 +20,21 @@ public class TennisGame1 implements TennisGame {
     }
 
     public String getScore() {
-        String score;
         if (m_score1==m_score2)
         {
             if (m_score1 <= 2)
-                score = scoreToLabel(m_score1) + "-All";
+                return scoreToLabel(m_score1) + "-All";
             else
-                score = "Deuce";
+                return "Deuce";
         }
-        else if (m_score1>=4 || m_score2>=4)
+        if (m_score1>=4 || m_score2>=4)
         {
             int scoreDistance = m_score1-m_score2;
             final String prefix = Math.abs(scoreDistance) == 1 ? "Advantage " : "Win for ";
             final String playerName = m_score1 > m_score2 ? player1Name : player2Name;
-            score = prefix + playerName;
+            return prefix + playerName;
         }
-        else
-        {
-            score = scoreToLabel(m_score1) + "-" + scoreToLabel(m_score2);
-        }
-        return score;
+        return scoreToLabel(m_score1) + "-" + scoreToLabel(m_score2);
     }
 
     private String scoreToLabel(int score) {

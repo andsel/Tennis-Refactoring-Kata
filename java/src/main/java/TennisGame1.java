@@ -1,55 +1,73 @@
 
 public class TennisGame1 implements TennisGame {
-    
-    private int m_score1 = 0;
-    private int m_score2 = 0;
-    private String player1Name;
-    private String player2Name;
+
+    class Player {
+        private int m_score = 0;
+        public final String name;
+
+        Player(String name) {
+            this.name = name;
+        }
+
+        void wonPoint() {
+            m_score++;
+        }
+
+        int score() {
+            return m_score;
+        }
+
+        Player vantage(Player opposite) {
+            return m_score > opposite.score() ? this : opposite;
+        }
+
+        private String scoreToLabel() {
+            switch(m_score)
+            {
+                case 0:
+                    return "Love";
+                case 1:
+                    return "Fifteen";
+                case 2:
+                    return "Thirty";
+                case 3:
+                    return "Forty";
+                default:
+                    return "";
+            }
+        }
+     }
+
+    private Player player1;
+    private Player player2;
 
     public TennisGame1(String player1Name, String player2Name) {
-        this.player1Name = player1Name;
-        this.player2Name = player2Name;
+        this.player1 = new Player(player1Name);
+        this.player2 = new Player(player2Name);
     }
 
     public void wonPoint(String playerName) {
-        //== checks the instance id
         if (playerName.equals("player1"))
-            m_score1++;
+            player1.wonPoint();
         else
-            m_score2++;
+            player2.wonPoint();
     }
 
     public String getScore() {
-        if (m_score1==m_score2)
+        if (player1.score() == player2.score())
         {
-            if (m_score1 <= 2)
-                return scoreToLabel(m_score1) + "-All";
+            if (player1.score() <= 2)
+                return player1.scoreToLabel() + "-All";
             else
                 return "Deuce";
         }
-        if (m_score1>=4 || m_score2>=4)
+        if (player1.score()>=4 || player2.score()>=4)
         {
-            int scoreDistance = m_score1-m_score2;
+            int scoreDistance = player1.score()-player2.score();
             final String prefix = Math.abs(scoreDistance) == 1 ? "Advantage " : "Win for ";
-            final String playerName = m_score1 > m_score2 ? player1Name : player2Name;
-            return prefix + playerName;
+            final Player advantaged = player1.vantage(player2);
+            return prefix + advantaged.name;
         }
-        return scoreToLabel(m_score1) + "-" + scoreToLabel(m_score2);
-    }
-
-    private String scoreToLabel(int score) {
-        switch(score)
-        {
-            case 0:
-                return "Love";
-            case 1:
-                return "Fifteen";
-            case 2:
-                return "Thirty";
-            case 3:
-                return "Forty";
-            default:
-                return "";
-        }
+        return player1.scoreToLabel() + "-" + player2.scoreToLabel();
     }
 }

@@ -86,26 +86,20 @@ public class TennisGame1 implements TennisGame {
     }
 
     public String getScore() {
-        String score = "";
-        if (player1.score.equals(player2.score))
+        int res = player2.compareTo(player1);
+        if (res == 0)
         {
             if (player1.score.value >= 3) {
-                score = "Deuce";
-            } else {
-                score = player1.score + "-All";
+                return "Deuce";
             }
+            return player1.score + "-All";
         }
-        else if (player1.hasScoredAtLeast3Points() || player2.hasScoredAtLeast3Points())
+        if (player1.hasScoredAtLeast3Points() || player2.hasScoredAtLeast3Points())
         {
-            int res = player2.compareTo(player1);
             Player advantagePlayer = res > 0 ? player2 : player1;
             String winType = Math.abs(res) == 1 ? "Advantage " : "Win for ";
-            score = winType + advantagePlayer;
+            return winType + advantagePlayer;
         }
-        else
-        {
-            score = player1.score + "-" + player2.score;
-        }
-        return score;
+        return player1.score + "-" + player2.score;
     }
 }

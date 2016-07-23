@@ -68,7 +68,7 @@ public class TennisGame1 implements TennisGame {
                 score = "Deuce";
             }
         }
-        else if (score1.value >=4 || score2.value >=4)
+        else if (score1.value > 3 || score2.value > 3)
         {
             int minusResult = score1.value - score2.value;
             if (minusResult==1) score ="Advantage " + player1Name;
@@ -78,27 +78,7 @@ public class TennisGame1 implements TennisGame {
         }
         else
         {
-            int tempScore=0;
-            for (int i=1; i<3; i++)
-            {
-                if (i==1) tempScore = score1.value;
-                else { score+="-"; tempScore = score2.value;}
-                switch(tempScore)
-                {
-                    case 0:
-                        score+="Love";
-                        break;
-                    case 1:
-                        score+="Fifteen";
-                        break;
-                    case 2:
-                        score+="Thirty";
-                        break;
-                    case 3:
-                        score+="Forty";
-                        break;
-                }
-            }
+            score = score1 + "-" + score2;
         }
         return score;
     }

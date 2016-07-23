@@ -62,10 +62,10 @@ public class TennisGame1 implements TennisGame {
         String score = "";
         if (score1.equals(score2))
         {
-            if (score1.value <= 2) {
-                score = score1 + "-All";
-            } else {
+            if (score1.value >= 3) {
                 score = "Deuce";
+            } else {
+                score = score1 + "-All";
             }
         }
         else if (score1.value > 3 || score2.value > 3)

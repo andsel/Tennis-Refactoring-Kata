@@ -1,10 +1,10 @@
 
 public class TennisGame1 implements TennisGame {
 
-    class Score {
+    class Score implements Comparable<Score> {
         private int value = 0;
 
-        void wonPoint() {
+        void markPoint() {
             value++;
         }
 
@@ -38,47 +38,73 @@ public class TennisGame1 implements TennisGame {
                     return "Forty";
             }
         }
+
+        public int compareTo(Score o) {
+            return o.value - value;
+        }
     }
 
+    class Player implements Comparable<Player> {
+        private Score score = new Score();
+        final String name;
 
-    private Score score1 = new Score();
-    private Score score2 = new Score();
-    private String player1Name;
-    private String player2Name;
+        Player(String name) {
+            this.name = name;
+        }
+
+        void wonPoint() {
+            score.markPoint();
+        }
+
+        boolean hasScoredAtLeast3Points() {
+            return score.value > 3;
+        }
+
+        @Override
+        public String toString() {
+            return name;
+        }
+
+        public int compareTo(Player o) {
+            return o.score.compareTo(score);
+        }
+    }
+
+    private Player player1;
+    private Player player2;
 
     public TennisGame1(String player1Name, String player2Name) {
-        this.player1Name = player1Name;
-        this.player2Name = player2Name;
+        this.player1 = new Player(player1Name);
+        this.player2 = new Player(player2Name);
     }
 
     public void wonPoint(String playerName) {
-        if (playerName.equals(player1Name))
-            score1.wonPoint();
+        if (playerName.equals(player1.name))
+            player1.wonPoint();
         else
-            score2.wonPoint();
+            player2.wonPoint();
     }
 
     public String getScore() {
         String score = "";
-        if (score1.equals(score2))
+        if (player1.score.equals(player2.score))
         {
-            if (score1.value >= 3) {
+            if (player1.score.value >= 3) {
                 score = "Deuce";
             } else {
-                score = score1 + "-All";
+                score = player1.score + "-All";
             }
         }
-        else if (score1.value > 3 || score2.value > 3)
+        else if (player1.hasScoredAtLeast3Points() || player2.hasScoredAtLeast3Points())
         {
-            int minusResult = score1.value - score2.value;
-            if (minusResult==1) score ="Advantage " + player1Name;
-            else if (minusResult ==-1) score ="Advantage " + player2Name;
-            else if (minusResult>=2) score = "Win for " + player1Name;
-            else score ="Win for " + player2Name;
+            int res = player2.compareTo(player1);
+            Player advantagePlayer = res > 0 ? player2 : player1;
+            String winType = Math.abs(res) == 1 ? "Advantage " : "Win for ";
+            score = winType + advantagePlayer;
         }
         else
         {
-            score = score1 + "-" + score2;
+            score = player1.score + "-" + player2.score;
         }
         return score;
     }

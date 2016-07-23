@@ -1,8 +1,48 @@
 
 public class TennisGame1 implements TennisGame {
 
-    private int score1 = 0;
-    private int score2 = 0;
+    class Score {
+        private int value = 0;
+
+        void wonPoint() {
+            value++;
+        }
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (!(o instanceof Score)) return false;
+
+            Score score = (Score) o;
+
+            return value == score.value;
+
+        }
+
+        @Override
+        public int hashCode() {
+            return value;
+        }
+
+        @Override
+        public String toString() {
+            switch (value)
+            {
+                case 0:
+                    return "Love";
+                case 1:
+                    return "Fifteen";
+                case 2:
+                    return "Thirty";
+                default:
+                    return "Forty";
+            }
+        }
+    }
+
+
+    private Score score1 = new Score();
+    private Score score2 = new Score();
     private String player1Name;
     private String player2Name;
 
@@ -13,35 +53,24 @@ public class TennisGame1 implements TennisGame {
 
     public void wonPoint(String playerName) {
         if (playerName.equals("player1"))
-            score1 += 1;
+            score1.wonPoint();
         else
-            score2 += 1;
+            score2.wonPoint();
     }
 
     public String getScore() {
         String score = "";
-        if (score1 == score2)
+        if (score1.equals(score2))
         {
-            switch (score1)
-            {
-                case 0:
-                        score = "Love-All";
-                    break;
-                case 1:
-                        score = "Fifteen-All";
-                    break;
-                case 2:
-                        score = "Thirty-All";
-                    break;
-                default:
-                        score = "Deuce";
-                    break;
-                
+            if (score1.value <= 2) {
+                score = score1 + "-All";
+            } else {
+                score = "Deuce";
             }
         }
-        else if (score1 >=4 || score2 >=4)
+        else if (score1.value >=4 || score2.value >=4)
         {
-            int minusResult = score1 - score2;
+            int minusResult = score1.value - score2.value;
             if (minusResult==1) score ="Advantage player1";
             else if (minusResult ==-1) score ="Advantage player2";
             else if (minusResult>=2) score = "Win for player1";
@@ -52,8 +81,8 @@ public class TennisGame1 implements TennisGame {
             int tempScore=0;
             for (int i=1; i<3; i++)
             {
-                if (i==1) tempScore = score1;
-                else { score+="-"; tempScore = score2;}
+                if (i==1) tempScore = score1.value;
+                else { score+="-"; tempScore = score2.value;}
                 switch(tempScore)
                 {
                     case 0:
